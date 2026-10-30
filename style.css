@@ -1,0 +1,3036 @@
+/* ========================================
+   SPACE THEME
+======================================== */
+
+:root {
+  --background: #02030b;
+  --text: #f4f5ff;
+  --muted: #a9afd0;
+  --purple: #a78bfa;
+  --blue: #60a5fa;
+  --cyan: #67e8f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Fredoka', sans-serif;
+  position: relative;
+  isolation: isolate;
+}
+
+/* ========================================
+   SPACE BACKGROUND
+======================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 15% 25%,
+      rgba(78, 46, 145, 0.32),
+      transparent 43%
+    ),
+    radial-gradient(
+      ellipse at 85% 80%,
+      rgba(31, 79, 155, 0.28),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 75% 15%,
+      rgba(89, 39, 119, 0.16),
+      transparent 35%
+    ),
+    #02030b;
+
+  animation: nebulaMove 20s ease-in-out infinite alternate;
+}
+
+/* Hundreds of small stars */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(1px 1px at 10px 20px, #fff 98%, transparent),
+    radial-gradient(2px 2px at 90px 80px, #d6d6ff 98%, transparent),
+    radial-gradient(1px 1px at 150px 140px, #fff 98%, transparent),
+    radial-gradient(1px 1px at 220px 40px, #a9cfff 98%, transparent),
+    radial-gradient(2px 2px at 290px 190px, #fff 98%, transparent),
+    radial-gradient(1px 1px at 340px 95px, #fff 98%, transparent),
+    radial-gradient(1px 1px at 65px 210px, #d9baff 98%, transparent),
+    radial-gradient(2px 2px at 195px 245px, #fff 98%, transparent),
+    radial-gradient(1px 1px at 375px 275px, #fff 98%, transparent);
+
+  background-size: 400px 300px;
+  opacity: 0.7;
+
+  animation: starTwinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaMove {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.35;
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}
+
+/* ========================================
+   MAIN LAYOUT
+======================================== */
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 25px;
+}
+
+/* ========================================
+   GREETING
+======================================== */
+
+h1 {
+  font-size: clamp(64px, 10vw, 110px);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 1px;
+  margin: 0 0 40px;
+
+  color: #fff;
+
+  text-shadow:
+    0 0 12px rgba(167, 139, 250, 0.6),
+    0 0 35px rgba(96, 165, 250, 0.35);
+
+  animation: titleFloat 6s ease-in-out infinite;
+}
+
+@keyframes titleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ========================================
+   FLOATING MESSAGE PANEL
+======================================== */
+
+.message-box {
+  width: 100%;
+  max-width: 700px;
+  padding: 45px 40px;
+  text-align: center;
+
+  background: rgba(10, 13, 34, 0.76);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(167, 139, 250, 0.28);
+  border-radius: 22px;
+
+  box-shadow:
+    0 0 35px rgba(100, 65, 180, 0.12),
+    0 0 90px rgba(55, 65, 150, 0.08),
+    inset 0 0 25px rgba(167, 139, 250, 0.035);
+
+  animation: panelAppear 1s ease-out both;
+}
+
+@keyframes panelAppear {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   MESSAGE TEXT
+======================================== */
+
+.message {
+  font-size: 21px;
+  line-height: 1.7;
+  font-weight: 400;
+  margin: 0 0 30px;
+  color: #d9ddf6;
+}
+
+h2 {
+  font-size: 27px;
+  font-weight: 500;
+  margin: 0 0 25px;
+  color: #fff;
+}
+
+/* ========================================
+   BUTTON AREA
+======================================== */
+
+.button-area {
+  position: relative;
+  width: 100%;
+  height: 150px;
+}
+
+button {
+  position: absolute;
+  top: 25px;
+
+  min-width: 110px;
+  min-height: 52px;
+  padding: 12px 22px;
+
+  border-radius: 12px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* ========================================
+   YES BUTTON
+======================================== */
+
+.yes-btn {
+  left: 20%;
+  z-index: 2;
+
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    #7251c8,
+    #3d79cc
+  );
+
+  border: 1px solid rgba(190, 180, 255, 0.45);
+
+  box-shadow:
+    0 0 15px rgba(122, 92, 234, 0.25);
+}
+
+.yes-btn:hover {
+  background: linear-gradient(
+    135deg,
+    #906cf0,
+    #4a96f0
+  );
+
+  box-shadow:
+    0 0 20px rgba(167, 139, 250, 0.5);
+}
+
+/* ========================================
+   NO BUTTON
+======================================== */
+
+.no-btn {
+  left: 60%;
+  z-index: 3;
+
+  color: #c3c6df;
+  background: rgba(35, 39, 68, 0.9);
+
+  border: 1px solid rgba(155, 163, 209, 0.25);
+
+  transition:
+    left 0.18s ease,
+    top 0.18s ease,
+    background 0.2s ease;
+}
+
+.no-btn:hover {
+  background: rgba(55, 59, 95, 0.95);
+}
+
+/* ========================================
+   YES BUTTON GLOW
+   Starts after No begins escaping
+======================================== */
+
+.yes-btn.glowing {
+  background: linear-gradient(
+    135deg,
+    #9d7aff,
+    #48b6ff
+  );
+
+  animation: cosmicPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes cosmicPulse {
+  0%, 100% {
+    transform: scale(1);
+
+    box-shadow:
+      0 0 12px rgba(167, 139, 250, 0.65),
+      0 0 25px rgba(96, 165, 250, 0.35);
+  }
+
+  50% {
+    transform: scale(1.13);
+
+    box-shadow:
+      0 0 25px rgba(167, 139, 250, 1),
+      0 0 55px rgba(96, 165, 250, 0.8),
+      0 0 90px rgba(96, 165, 250, 0.3);
+  }
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+  .container {
+    padding: 25px 16px;
+  }
+
+  h1 {
+    font-size: 66px;
+    margin-bottom: 30px;
+  }
+
+  .message-box {
+    padding: 35px 20px;
+  }
+
+  .message {
+    font-size: 18px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .yes-btn {
+    left: 8%;
+  }
+
+  .no-btn {
+    left: 58%;
+  }
+
+  button {
+    font-size: 18px;
+    min-width: 95px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+button:focus-visible {
+  outline: 3px solid #67e8f9;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  h1,
+  .message-box,
+  .yes-btn.glowing {
+    animation: none;
+  }
+
+  .no-btn {
+    transition: none;
+  }
+
+  .yes-btn.glowing {
+    box-shadow: 0 0 25px #a78bfa;
+  }
+}
+
+
+
+
+/* ========================================
+   FICTIONAL PLANET SYSTEM — V2
+======================================== */
+
+.planet-scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+}
+
+
+.planet-system {
+  --planet-size: 340px;
+
+  position: absolute;
+  width: 680px;
+  height: 680px;
+
+  top: 25%;
+  left: 75%;
+
+  margin-left: -340px;
+  margin-top: -340px;
+
+  opacity: 0.85;
+
+  animation: planetFloat 14s ease-in-out infinite;
+}
+
+
+/* ========================================
+   ATMOSPHERIC GLOW
+======================================== */
+
+.planet-atmosphere {
+  position: absolute;
+
+  width: 540px;
+  height: 540px;
+
+  top: 70px;
+  left: 70px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(69, 96, 190, 0.19) 0%,
+    rgba(94, 72, 182, 0.1) 38%,
+    transparent 72%
+  );
+
+  filter: blur(25px);
+}
+
+/* ========================================
+   MAIN PLANET
+======================================== */
+
+.planet {
+  position: absolute;
+
+  width: var(--planet-size);
+  height: var(--planet-size);
+
+  top: 170px;
+  left: 170px;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  z-index: 5;
+
+  background:
+    radial-gradient(
+      ellipse at 32% 28%,
+      rgba(216, 228, 245, 0.6) 0%,
+      transparent 24%
+    ),
+    radial-gradient(
+      ellipse at 62% 75%,
+      #18233d 0%,
+      #314b72 40%,
+      #627eaa 72%,
+      #a4b0c2 100%
+    );
+
+  box-shadow:
+    inset -65px -35px 75px rgba(0, 4, 20, 0.88),
+    inset 15px 10px 35px rgba(225, 239, 255, 0.2),
+    0 0 7px rgba(171, 194, 255, 0.55),
+    0 0 35px rgba(96, 129, 210, 0.28),
+    0 0 90px rgba(66, 89, 174, 0.14);
+}
+
+/* ========================================
+   PLANET SURFACE
+======================================== */
+
+.planet-surface {
+  position: absolute;
+
+  inset: -15%;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse at 25% 40%,
+      rgba(143, 180, 212, 0.4),
+      transparent 24%
+    ),
+    radial-gradient(
+      ellipse at 74% 60%,
+      rgba(11, 28, 63, 0.55),
+      transparent 32%
+    ),
+    repeating-linear-gradient(
+      173deg,
+      transparent 0px,
+      transparent 17px,
+      rgba(186, 206, 225, 0.12) 20px,
+      rgba(63, 93, 140, 0.25) 34px,
+      transparent 49px,
+      transparent 70px
+    );
+
+  animation: surfaceRotation 65s linear infinite;
+}
+
+/* Dark hemisphere */
+
+.planet-shadow {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    ellipse at 20% 22%,
+    transparent 5%,
+    rgba(0, 3, 16, 0.1) 40%,
+    rgba(0, 2, 12, 0.88) 100%
+  );
+}
+
+/* ========================================
+   MOONS
+======================================== */
+
+.moon {
+  position: absolute;
+  border-radius: 50%;
+
+  /* JavaScript updates these positions */
+  transform: translate(-50%, -50%);
+
+  will-change: left, top, transform;
+}
+
+/* Moon 1 — icy, cratered */
+
+.moon-one {
+  width: 58px;
+  height: 58px;
+
+  background:
+    radial-gradient(
+      circle at 28% 32%,
+      rgba(52, 68, 101, 0.4) 0 5%,
+      transparent 7%
+    ),
+    radial-gradient(
+      circle at 68% 61%,
+      rgba(49, 68, 98, 0.35) 0 9%,
+      transparent 11%
+    ),
+    radial-gradient(
+      circle at 40% 75%,
+      rgba(61, 80, 110, 0.3) 0 5%,
+      transparent 7%
+    ),
+    radial-gradient(
+      circle at 28% 22%,
+      #f3f5fa,
+      #9baac5 47%,
+      #303b5d 100%
+    );
+
+  box-shadow:
+    inset -12px -9px 18px rgba(3, 8, 25, 0.68),
+    0 0 12px rgba(188, 208, 255, 0.18);
+}
+
+/* Moon 2 — rocky */
+
+.moon-two {
+  width: 38px;
+  height: 38px;
+
+  background:
+    radial-gradient(
+      circle at 70% 35%,
+      rgba(72, 57, 65, 0.5) 0 10%,
+      transparent 12%
+    ),
+    radial-gradient(
+      circle at 35% 70%,
+      rgba(78, 67, 84, 0.4) 0 8%,
+      transparent 10%
+    ),
+    radial-gradient(
+      circle at 30% 23%,
+      #d2b7b4,
+      #937b8f 55%,
+      #372d49 100%
+    );
+
+  box-shadow:
+    inset -8px -6px 12px rgba(11, 6, 22, 0.7),
+    0 0 9px rgba(209, 166, 192, 0.13);
+}
+
+/* Moon 3 — small blue moon */
+
+.moon-three {
+  width: 27px;
+  height: 27px;
+
+  background:
+    radial-gradient(
+      circle at 63% 67%,
+      rgba(24, 65, 83, 0.45) 0 12%,
+      transparent 14%
+    ),
+    radial-gradient(
+      circle at 27% 20%,
+      #d6f3f3,
+      #7faebc 52%,
+      #26475e 100%
+    );
+
+  box-shadow:
+    inset -6px -5px 10px rgba(4, 23, 39, 0.7),
+    0 0 10px rgba(124, 214, 236, 0.2);
+}
+
+/* ========================================
+   ANIMATION
+======================================== */
+
+@keyframes planetFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes surfaceRotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   SCREEN SIZES
+======================================== */
+
+@media (max-width: 900px) {
+  .planet-system {
+    opacity: 0.45;
+  }
+}
+
+@media (max-width: 600px) {
+  .planet-system {
+    scale: 0.65;
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .planet-system,
+  .planet-surface {
+    animation: none;
+  }
+}
+
+
+/* ========================================
+   INTERACTIVE MOONS & PLANETARY RING
+======================================== */
+
+/* Allow moons to receive clicks */
+
+.planet-scene {
+  pointer-events: none;
+}
+
+.moon {
+  pointer-events: auto;
+  cursor: crosshair;
+  transition: filter 0.2s ease;
+}
+
+.moon:hover {
+  filter: brightness(1.6) !important;
+}
+
+/*
+  The main container covers the viewport.
+  This lets clicks pass through empty space,
+  while keeping the message box interactive.
+*/
+
+.container {
+  pointer-events: none;
+}
+
+.message-box,
+.container h1,
+.message-box * {
+  pointer-events: auto;
+}
+
+/* ========================================
+   TWO ADDITIONAL MOONS
+======================================== */
+
+.moon-four {
+  width: 46px;
+  height: 46px;
+
+  background:
+    radial-gradient(
+      circle at 65% 40%,
+      rgba(60, 55, 95, 0.5) 0 9%,
+      transparent 11%
+    ),
+    radial-gradient(
+      circle at 28% 25%,
+      #d6c8ee,
+      #8178bb 52%,
+      #343456 100%
+    );
+
+  box-shadow:
+    inset -10px -8px 15px rgba(5, 5, 25, 0.65),
+    0 0 15px rgba(170, 145, 255, 0.25);
+}
+
+.moon-five {
+  width: 33px;
+  height: 33px;
+
+  background:
+    radial-gradient(
+      circle at 42% 65%,
+      rgba(71, 63, 59, 0.4) 0 12%,
+      transparent 14%
+    ),
+    radial-gradient(
+      circle at 25% 20%,
+      #e9dac4,
+      #b19e91 52%,
+      #534c5c 100%
+    );
+
+  box-shadow:
+    inset -7px -6px 12px rgba(20, 15, 25, 0.65),
+    0 0 12px rgba(230, 210, 185, 0.2);
+}
+
+/* ========================================
+   EXPLOSION PARTICLES
+======================================== */
+
+.ring-particle {
+  position: absolute;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: #dceaff;
+
+  pointer-events: none;
+
+  box-shadow:
+    0 0 4px currentColor;
+
+  will-change: transform, left, top, opacity;
+}
+
+/* Initial explosion flash */
+
+.explosion-flash {
+  position: absolute;
+
+  width: 90px;
+  height: 90px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.95) 0%,
+    rgba(150,190,255,0.65) 22%,
+    rgba(105,120,255,0.25) 48%,
+    transparent 72%
+  );
+
+  pointer-events: none;
+
+  transform: translate(-50%, -50%);
+
+  animation: explosionFlash 0.45s ease-out forwards;
+}
+
+@keyframes explosionFlash {
+  0% {
+    opacity: 1;
+    scale: 0.3;
+  }
+
+  100% {
+    opacity: 0;
+    scale: 2.5;
+  }
+}
+
+/* ========================================
+   FINISHED PLANET RING GLOW
+======================================== */
+
+.planet-system.ring-complete .planet {
+  box-shadow:
+    inset -65px -35px 75px rgba(0, 4, 20, 0.88),
+    inset 15px 10px 35px rgba(225, 239, 255, 0.2),
+    0 0 20px rgba(171, 194, 255, 0.6),
+    0 0 65px rgba(96, 129, 210, 0.35),
+    0 0 120px rgba(120, 100, 220, 0.22);
+}
+
+
+/* ========================================
+   ADDITIONAL PLANETS
+======================================== */
+
+.extra-space {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.world {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+
+  animation: worldFloat 12s ease-in-out infinite;
+}
+
+/* Planet core shared styling */
+
+.world-core {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 3;
+  overflow: hidden;
+}
+
+/* ========================================
+   SATURN-INSPIRED PLANET
+======================================== */
+
+.saturn-world {
+  --size: 230px;
+
+  top: 12%;
+  left: 9%;
+
+  animation-duration: 15s;
+}
+
+.saturn-core {
+  background:
+    repeating-linear-gradient(
+      172deg,
+      transparent 0 14px,
+      rgba(255, 230, 180, 0.18) 16px 28px,
+      rgba(110, 70, 45, 0.13) 30px 45px
+    ),
+    radial-gradient(
+      circle at 28% 24%,
+      #f6dfb9 0%,
+      #d8af7f 34%,
+      #a7755d 65%,
+      #51404b 100%
+    );
+
+  box-shadow:
+    inset -45px -20px 50px rgba(28, 16, 31, 0.75),
+    inset 12px 8px 25px rgba(255, 245, 215, 0.35),
+    0 0 35px rgba(219, 170, 113, 0.18);
+}
+
+/* Saturn rings */
+
+.saturn-ring {
+  position: absolute;
+
+  width: 170%;
+  height: 58%;
+
+  left: -35%;
+  top: 21%;
+
+  border-radius: 50%;
+
+  transform: rotate(-23deg);
+
+  border: 25px solid rgba(198, 164, 128, 0.68);
+
+  box-shadow:
+    0 0 0 8px rgba(239, 213, 175, 0.38),
+    0 0 0 15px rgba(140, 117, 117, 0.23),
+    inset 0 0 0 8px rgba(107, 83, 91, 0.35);
+}
+
+.ring-back {
+  z-index: 1;
+}
+
+.ring-front {
+  z-index: 5;
+
+  /* Only show the front half of the ring */
+  clip-path: inset(50% -40% -40% -40%);
+}
+
+/* ========================================
+   VOLCANIC PLANET
+======================================== */
+
+.volcanic-world {
+  --size: 165px;
+
+  left: 13%;
+  bottom: 10%;
+
+  animation-duration: 18s;
+  animation-delay: -5s;
+}
+
+.volcanic-core {
+  background:
+    radial-gradient(
+      ellipse at 35% 35%,
+      rgba(255, 161, 75, 0.75) 0 4%,
+      transparent 13%
+    ),
+    radial-gradient(
+      ellipse at 65% 70%,
+      rgba(255, 95, 36, 0.65) 0 6%,
+      transparent 15%
+    ),
+    repeating-linear-gradient(
+      145deg,
+      transparent 0 17px,
+      rgba(255, 99, 42, 0.21) 19px 22px,
+      transparent 25px 45px
+    ),
+    radial-gradient(
+      circle at 30% 25%,
+      #8a3932,
+      #542027 50%,
+      #1b101b 100%
+    );
+
+  box-shadow:
+    inset -28px -15px 40px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(240, 72, 35, 0.2),
+    0 0 55px rgba(175, 45, 27, 0.12);
+}
+
+/* ========================================
+   ADDITIONAL MOONS
+======================================== */
+
+.world-moon {
+  position: absolute;
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  will-change: left, top;
+}
+
+/* Saturn moon styles */
+
+.moon-icy {
+  width: 27px;
+  height: 27px;
+  background: radial-gradient(
+    circle at 25% 20%,
+    #f8faff,
+    #a1b6cf 55%,
+    #334660
+  );
+}
+
+.moon-rocky {
+  width: 19px;
+  height: 19px;
+  background: radial-gradient(
+    circle at 25% 20%,
+    #ddd0c4,
+    #958679 55%,
+    #403b42
+  );
+}
+
+.moon-gold {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(
+    circle at 25% 20%,
+    #f9e5c0,
+    #c19c68 55%,
+    #5b4c45
+  );
+}
+
+/* Volcanic moon styles */
+
+.moon-ash {
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(
+    circle at 25% 20%,
+    #b8a5a5,
+    #65525d 55%,
+    #211d2a
+  );
+}
+
+.moon-dark {
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(
+    circle at 25% 20%,
+    #aaa5b5,
+    #565468 55%,
+    #222333
+  );
+}
+
+.world-moon {
+  box-shadow:
+    inset -5px -4px 10px rgba(0, 0, 0, 0.55),
+    0 0 8px rgba(200, 200, 255, 0.12);
+}
+
+/* ========================================
+   FLOATING ANIMATION
+======================================== */
+
+@keyframes worldFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-13px);
+  }
+}
+
+/* ========================================
+   FLYING SPACESHIP
+======================================== */
+
+.spaceship {
+  position: fixed;
+
+  width: 150px;
+  height: 75px;
+
+  top: 0;
+  left: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  opacity: 0;
+  visibility: hidden;
+
+  filter:
+    drop-shadow(0 0 12px rgba(92, 182, 255, 0.25));
+}
+
+.spaceship svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Engine flicker */
+
+.engine-glow {
+  filter: blur(7px);
+  animation: engineFlicker 0.3s ease-in-out infinite alternate;
+}
+
+.engine-flame {
+  animation: flameFlicker 0.2s ease-in-out infinite alternate;
+  transform-origin: 42px 45px;
+}
+
+@keyframes engineFlicker {
+  from {
+    opacity: 0.45;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes flameFlicker {
+  from {
+    transform: scaleX(0.75);
+  }
+
+  to {
+    transform: scaleX(1.2);
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 900px) {
+  .saturn-world {
+    --size: 170px;
+    left: 7%;
+  }
+
+  .volcanic-world {
+    --size: 125px;
+    left: 7%;
+  }
+}
+
+@media (max-width: 600px) {
+  .saturn-world {
+    --size: 125px;
+    top: 9%;
+    left: 10%;
+  }
+
+  .volcanic-world {
+    --size: 95px;
+    bottom: 8%;
+    left: 12%;
+  }
+
+  .spaceship {
+    width: 110px;
+    height: 55px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world,
+  .engine-glow,
+  .engine-flame {
+    animation: none;
+  }
+}
+
+
+/* ========================================
+   INTERACTIVE SPACESHIP
+======================================== */
+
+/* Allow spaceship to be clicked */
+
+.spaceship {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+.spaceship svg {
+  pointer-events: none;
+}
+
+/* ========================================
+   SPACESHIP EXPLOSION
+======================================== */
+
+.ship-explosion {
+  position: fixed;
+
+  width: 130px;
+  height: 130px;
+
+  border-radius: 50%;
+  pointer-events: none;
+
+  z-index: 20;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,1) 0%,
+    rgba(255,210,120,0.95) 15%,
+    rgba(255,110,55,0.7) 35%,
+    rgba(120,130,255,0.3) 55%,
+    transparent 75%
+  );
+
+  transform: translate(-50%, -50%);
+
+  animation: shipExplosion 0.6s ease-out forwards;
+}
+
+@keyframes shipExplosion {
+  0% {
+    scale: 0.2;
+    opacity: 1;
+  }
+
+  100% {
+    scale: 3;
+    opacity: 0;
+  }
+}
+
+/* Debris fragments */
+
+.ship-debris {
+  position: fixed;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 2px;
+
+  pointer-events: none;
+  z-index: 20;
+
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* ========================================
+   ASTRONAUT
+======================================== */
+
+.astronaut {
+  position: fixed;
+
+  width: 90px;
+  height: 120px;
+
+  top: 0;
+  left: 0;
+
+  z-index: 30;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transform-origin: center center;
+
+  filter:
+    drop-shadow(0 0 12px rgba(160, 200, 255, 0.35));
+}
+
+.astronaut svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ========================================
+   IMPACT EFFECT
+======================================== */
+
+@keyframes cameraShake {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+
+  15% {
+    transform: translate(-10px, 5px);
+  }
+
+  30% {
+    transform: translate(9px, -7px);
+  }
+
+  45% {
+    transform: translate(-7px, -4px);
+  }
+
+  60% {
+    transform: translate(6px, 5px);
+  }
+
+  75% {
+    transform: translate(-3px, 2px);
+  }
+}
+
+.container.camera-shake {
+  animation: cameraShake 0.5s ease-out;
+}
+
+/* Brief white-blue impact flash */
+
+.impact-flash {
+  position: fixed;
+  inset: 0;
+
+  z-index: 25;
+
+  pointer-events: none;
+
+  background: rgba(190, 220, 255, 0.4);
+
+  animation: impactFlash 0.35s ease-out forwards;
+}
+
+@keyframes impactFlash {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+/* ========================================
+   SECOND SCREEN TRANSITION
+======================================== */
+
+.scene-veil {
+  position: fixed;
+  inset: 0;
+
+  z-index: 8;
+
+  background: rgba(2, 4, 15, 0.3);
+
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 1.5s ease,
+    backdrop-filter 1.5s ease,
+    -webkit-backdrop-filter 1.5s ease,
+    visibility 1.5s;
+}
+
+body.second-screen .scene-veil {
+  opacity: 1;
+  visibility: visible;
+
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+
+  background: rgba(2, 4, 15, 0.48);
+}
+
+/* Remove introduction */
+
+body.second-screen .container {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.7s ease,
+    visibility 0.7s;
+}
+
+/* ========================================
+   PERSONAL WELCOME
+======================================== */
+
+.welcome-screen {
+  position: fixed;
+  inset: 0;
+
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  overflow-y: auto;
+
+  transition:
+    opacity 0.9s ease,
+    visibility 0.9s;
+}
+
+.welcome-screen.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.welcome-card {
+  width: 100%;
+  max-width: 660px;
+
+  margin: auto;
+  padding: 45px 45px 40px;
+
+  text-align: center;
+
+  background: rgba(11, 16, 38, 0.88);
+
+  border: 1px solid rgba(160, 175, 255, 0.2);
+  border-radius: 24px;
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 0 50px rgba(73, 87, 176, 0.1),
+    inset 0 0 30px rgba(120, 130, 255, 0.025);
+}
+
+.welcome-symbol {
+  font-size: 34px;
+  color: #b9a4ff;
+  margin-bottom: 12px;
+
+  text-shadow: 0 0 25px rgba(167, 139, 250, 0.6);
+}
+
+.welcome-label,
+.dashboard-label {
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+
+  color: #a3a8d6;
+}
+
+.welcome-card h2 {
+  margin: 22px 0 25px;
+
+  font-size: clamp(32px, 5vw, 45px);
+  line-height: 1.2;
+  font-weight: 500;
+
+  color: #fff;
+}
+
+.welcome-card h2 span {
+  color: #b6a8ff;
+}
+
+.welcome-divider {
+  width: 65px;
+  height: 2px;
+
+  margin: 0 auto 28px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #a78bfa,
+    transparent
+  );
+}
+
+.welcome-text {
+  max-width: 530px;
+  margin: 0 auto 16px;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  color: #c7cce6;
+}
+
+.welcome-signature {
+  margin: 25px 0;
+  color: #baaaff;
+  font-size: 16px;
+}
+
+/* ========================================
+   CONTINUE BUTTON
+======================================== */
+
+.continue-btn {
+  position: relative;
+  top: auto;
+  left: auto;
+
+  min-width: 215px;
+
+  margin-top: 10px;
+  padding: 15px 25px;
+
+  color: #fff;
+
+  background: linear-gradient(
+    135deg,
+    #7962d9,
+    #547fd1
+  );
+
+  border: 1px solid rgba(196, 185, 255, 0.35);
+  border-radius: 12px;
+
+  box-shadow:
+    0 0 20px rgba(120, 105, 220, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.continue-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 0 30px rgba(120, 105, 220, 0.5);
+}
+
+.continue-btn span {
+  margin-left: 12px;
+}
+
+/* ========================================
+   MISSION CONTROL DASHBOARD
+======================================== */
+
+.dashboard-screen {
+  position: fixed;
+  inset: 0;
+
+  z-index: 11;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  overflow-y: auto;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s;
+}
+
+.dashboard-screen.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.dashboard-content {
+  width: 100%;
+  max-width: 950px;
+
+  margin: auto;
+}
+
+.dashboard-heading {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.dashboard-heading h2 {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 500;
+
+  margin: 15px 0 10px;
+}
+
+.dashboard-heading h2 span {
+  color: #a78bfa;
+}
+
+.dashboard-heading > p:last-child {
+  color: #aeb8d7;
+  font-size: 17px;
+}
+
+/* ========================================
+   DASHBOARD CARDS
+======================================== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 25px;
+}
+
+.dashboard-card {
+  position: relative;
+
+  top: auto;
+  left: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 280px;
+
+  padding: 32px;
+
+  text-align: left;
+
+  background: rgba(15, 22, 49, 0.85);
+
+  border: 1px solid rgba(155, 175, 245, 0.2);
+  border-radius: 20px;
+
+  color: #fff;
+
+  backdrop-filter: blur(15px);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-7px);
+
+  background: rgba(25, 34, 72, 0.95);
+
+  border-color: rgba(167, 139, 250, 0.6);
+
+  box-shadow:
+    0 15px 45px rgba(70, 65, 150, 0.2);
+}
+
+.dashboard-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 65px;
+
+  margin-bottom: 25px;
+
+  border-radius: 17px;
+
+  background: rgba(135, 116, 230, 0.15);
+  border: 1px solid rgba(160, 150, 245, 0.2);
+
+  color: #b9adff;
+  font-size: 36px;
+}
+
+.dashboard-category {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #98a5d0;
+}
+
+.dashboard-card h3 {
+  font-size: 30px;
+  font-weight: 500;
+
+  margin: 10px 0;
+}
+
+.dashboard-card p {
+  color: #aeb8d7;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  margin: 0;
+
+  max-width: 320px;
+}
+
+.dashboard-arrow {
+  position: absolute;
+
+  top: 25px;
+  right: 28px;
+
+  font-size: 26px;
+  color: #9c9ac9;
+
+  transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover .dashboard-arrow {
+  transform: translate(4px, -4px);
+}
+
+.dashboard-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 35px;
+
+  font-size: 11px;
+  letter-spacing: 2px;
+
+  color: #8e9abc;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  background: #75e5b0;
+
+  box-shadow: 0 0 10px #75e5b0;
+}
+
+.dashboard-feedback {
+  min-height: 22px;
+  text-align: center;
+  color: #c6b9ff;
+  font-size: 14px;
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 650px) {
+  .welcome-card {
+    padding: 35px 22px;
+  }
+
+  .welcome-text {
+    font-size: 14px;
+  }
+
+  .dashboard-screen {
+    padding: 25px 18px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .dashboard-card {
+    min-height: 220px;
+    padding: 25px;
+  }
+
+  .dashboard-heading {
+    margin-bottom: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-veil,
+  .welcome-screen,
+  .dashboard-screen,
+  .container {
+    transition-duration: 0.01ms;
+  }
+}
+
+
+/* ========================================
+   ADD A GIFT SCREEN
+======================================== */
+
+.gift-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+  overflow-y: auto;
+
+  background: rgba(2, 4, 16, 0.55);
+  backdrop-filter: blur(6px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s;
+}
+
+.gift-screen.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.gift-panel {
+  position: relative;
+
+  width: 100%;
+  max-width: 600px;
+
+  margin: auto;
+  padding: 40px;
+
+  background: rgba(13, 19, 43, 0.97);
+
+  border: 1px solid rgba(156, 173, 255, 0.25);
+  border-radius: 24px;
+
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.5),
+    0 0 45px rgba(110, 95, 220, 0.12);
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.gift-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.gift-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #9faadc;
+}
+
+.gift-icon {
+  font-size: 40px;
+  color: #b6a4ff;
+  margin: 20px 0 5px;
+}
+
+.gift-header h2 {
+  font-size: 42px;
+  font-weight: 500;
+  margin: 10px 0;
+}
+
+.gift-header p {
+  color: #aeb8d7;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ========================================
+   CLOSE BUTTON
+======================================== */
+
+.gift-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  left: auto;
+
+  min-width: 0;
+  min-height: 0;
+  width: 35px;
+  height: 35px;
+
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  color: #aeb8d7;
+  font-size: 30px;
+
+  cursor: pointer;
+}
+
+.gift-close:hover {
+  color: white;
+}
+
+/* ========================================
+   FORM
+======================================== */
+
+.gift-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gift-form label {
+  font-size: 13px;
+  color: #dce2fa;
+  font-weight: 500;
+}
+
+.gift-form label span {
+  color: #bb9aff;
+}
+
+.gift-form input,
+.gift-form select,
+.gift-form textarea {
+  width: 100%;
+
+  padding: 14px 15px;
+
+  background: rgba(7, 12, 31, 0.85);
+
+  border: 1px solid rgba(155, 169, 225, 0.25);
+  border-radius: 10px;
+
+  color: #fff;
+
+  font-family: 'Fredoka', sans-serif;
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.gift-form input::placeholder,
+.gift-form textarea::placeholder {
+  color: #687497;
+}
+
+.gift-form input:focus,
+.gift-form select:focus,
+.gift-form textarea:focus {
+  border-color: #a78bfa;
+
+  box-shadow:
+    0 0 0 3px rgba(167, 139, 250, 0.12);
+}
+
+.gift-form textarea {
+  resize: vertical;
+}
+
+.gift-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.gift-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ========================================
+   SAVE BUTTON
+======================================== */
+
+.gift-submit {
+  position: relative;
+  top: auto;
+  left: auto;
+
+  width: 100%;
+
+  margin-top: 12px;
+  padding: 15px 25px;
+
+  background: linear-gradient(
+    135deg,
+    #8365df,
+    #568bd7
+  );
+
+  border: 1px solid rgba(196, 185, 255, 0.3);
+  border-radius: 11px;
+
+  color: #fff;
+
+  font-size: 17px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.gift-submit:hover {
+  box-shadow: 0 0 25px rgba(141, 117, 250, 0.45);
+}
+
+.gift-submit span {
+  margin-left: 8px;
+}
+
+.gift-feedback {
+  min-height: 20px;
+  text-align: center;
+
+  color: #85e7b4;
+  font-size: 14px;
+
+  margin: 4px 0 0;
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+  .gift-screen {
+    padding: 15px;
+  }
+
+  .gift-panel {
+    padding: 35px 20px;
+  }
+
+  .gift-header h2 {
+    font-size: 35px;
+  }
+
+  .gift-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gift-screen {
+    transition: none;
+  }
+}
+
+
+/* ========================================
+   WISHLIST SCREEN
+======================================== */
+
+.wishlist-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+
+  overflow-y: auto;
+
+  background: rgba(3, 5, 19, 0.3);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s;
+}
+
+.wishlist-screen.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.wishlist-container {
+  width: min(1200px, 100%);
+  min-height: 100vh;
+
+  margin: auto;
+  padding: 40px 35px 80px;
+}
+
+/* ========================================
+   TOP NAVIGATION
+======================================== */
+
+.wishlist-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.wishlist-back,
+.wishlist-add {
+  position: relative;
+  top: auto;
+  left: auto;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.wishlist-back {
+  color: #b9c2e4;
+  background: rgba(18, 24, 53, 0.8);
+  border: 1px solid rgba(170, 180, 240, 0.2);
+}
+
+.wishlist-add {
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #8064df,
+    #5686d7
+  );
+
+  border: 1px solid rgba(180, 170, 255, 0.3);
+}
+
+/* ========================================
+   HEADING
+======================================== */
+
+.wishlist-heading {
+  text-align: center;
+  margin: 55px 0 35px;
+}
+
+.wishlist-label {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: #9ea9d5;
+}
+
+.wishlist-heading h2 {
+  margin: 12px 0;
+  font-size: clamp(42px, 6vw, 65px);
+  font-weight: 500;
+}
+
+.wishlist-heading h2 span {
+  color: #b4a1ff;
+}
+
+.wishlist-heading > p:not(.wishlist-label) {
+  color: #aeb8d7;
+  font-size: 16px;
+}
+
+.wishlist-count {
+  display: inline-block;
+
+  margin-top: 15px;
+  padding: 8px 17px;
+
+  background: rgba(140, 120, 230, 0.12);
+  border: 1px solid rgba(160, 145, 245, 0.2);
+  border-radius: 30px;
+
+  color: #b9aff2;
+  font-size: 12px;
+}
+
+/* ========================================
+   OCCASION FILTERS
+======================================== */
+
+.wishlist-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.wish-filter {
+  position: relative;
+  top: auto;
+  left: auto;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 11px 18px;
+
+  color: #b4bddc;
+  background: rgba(16, 22, 48, 0.85);
+
+  border: 1px solid rgba(150, 165, 220, 0.2);
+  border-radius: 30px;
+
+  font-size: 13px;
+}
+
+.wish-filter.active {
+  color: #fff;
+
+  background: rgba(112, 89, 200, 0.65);
+
+  border-color: rgba(176, 155, 255, 0.6);
+}
+
+/* ========================================
+   GIFT GRID
+======================================== */
+
+.wishlist-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+.wish-card {
+  overflow: hidden;
+
+  background: rgba(13, 20, 44, 0.92);
+
+  border: 1px solid rgba(148, 167, 235, 0.2);
+  border-radius: 18px;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.wish-card:hover {
+  transform: translateY(-5px);
+
+  border-color: rgba(160, 140, 245, 0.45);
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.22);
+}
+
+/* ========================================
+   GIFT IMAGE
+======================================== */
+
+.wish-image {
+  height: 210px;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(101, 90, 180, 0.28),
+      transparent 70%
+    ),
+    #0b1129;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wish-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wish-placeholder {
+  font-size: 60px;
+  color: #9995d8;
+}
+
+/* ========================================
+   GIFT DETAILS
+======================================== */
+
+.wish-details {
+  padding: 22px;
+}
+
+.wish-occasion {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  background: rgba(120, 105, 215, 0.15);
+  border-radius: 20px;
+
+  color: #b8aafa;
+  font-size: 11px;
+}
+
+.wish-name {
+  font-size: 21px;
+  font-weight: 500;
+
+  margin: 13px 0 8px;
+
+  overflow-wrap: anywhere;
+}
+
+.wish-price {
+  color: #a2e7c3;
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+
+.wish-notes {
+  color: #aab4d3;
+  font-size: 13px;
+  line-height: 1.6;
+
+  margin: 12px 0;
+
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   CARD ACTIONS
+======================================== */
+
+.wish-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.wish-actions button,
+.wish-actions a {
+  position: relative;
+  top: auto;
+  left: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 9px 12px;
+
+  border-radius: 8px;
+
+  font-family: 'Fredoka', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+
+  text-decoration: none;
+}
+
+.wish-edit,
+.wish-store {
+  background: rgba(95, 112, 180, 0.18);
+  border: 1px solid rgba(130, 150, 220, 0.25);
+  color: #d1d9fa;
+}
+
+.wish-delete {
+  margin-left: auto;
+
+  background: rgba(190, 70, 90, 0.1);
+  border: 1px solid rgba(210, 100, 120, 0.2);
+  color: #f4a5b4;
+}
+
+/* ========================================
+   EMPTY STATE
+======================================== */
+
+.wishlist-empty {
+  display: none;
+
+  text-align: center;
+  padding: 65px 20px;
+
+  border: 1px dashed rgba(150, 165, 220, 0.3);
+  border-radius: 20px;
+
+  background: rgba(15, 20, 45, 0.65);
+}
+
+.wishlist-empty.visible {
+  display: block;
+}
+
+.empty-symbol {
+  font-size: 65px;
+  color: #afa0ee;
+}
+
+.wishlist-empty h3 {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.wishlist-empty p {
+  color: #aab5d6;
+}
+
+.wishlist-empty button {
+  position: relative;
+  top: auto;
+  left: auto;
+
+  margin-top: 18px;
+
+  color: white;
+  background: #745bcb;
+
+  border: none;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 950px) {
+  .wishlist-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .wishlist-container {
+    padding: 25px 16px 60px;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wishlist-heading {
+    margin: 40px 0 30px;
+  }
+
+  .wishlist-back,
+  .wishlist-add {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+
+/* ========================================
+   ASTRONAUT COMPANION
+======================================== */
+.astronaut-companion {
+  position: fixed;
+  width: 90px;
+  height: 120px;
+  top: 0;
+  left: 0;
+  z-index: 15;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  cursor: pointer;
+  filter: drop-shadow(0 0 12px rgba(160, 200, 255, 0.4));
+}
+
+.astronaut-companion.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.astronaut-companion svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.astronaut-companion .astronaut-message {
+  position: absolute;
+  bottom: 105%;
+  left: 50%;
+  width: max-content;
+  max-width: 220px;
+  padding: 10px 15px;
+  border: 1px solid rgba(180, 205, 255, 0.45);
+  border-radius: 15px;
+  background: rgba(12, 17, 43, 0.95);
+  color: #eff4ff;
+  font-family: "Fredoka", sans-serif;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.4;
+  white-space: normal;
+  transform: translateX(-50%);
+  box-shadow: 0 0 25px rgba(105, 128, 255, 0.18);
+  pointer-events: none;
+}
+
+.astronaut-companion .astronaut-message::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 6px solid transparent;
+  border-top-color: rgba(12, 17, 43, 0.95);
+  transform: translateX(-50%);
+}
+
+body.second-screen .astronaut-companion {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .astronaut-companion {
+    width: 60px;
+    height: 80px;
+  }
+
+  .astronaut-companion .astronaut-message {
+    font-size: 11px;
+    max-width: 150px;
+  }
+}
+
+
+/* ASTRONAUT COMPANION — FLIGHT IMPROVEMENTS */
+.astronaut-companion {
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.astronaut-companion::after {
+  content: "";
+  position: absolute;
+  left: 39%;
+  top: 77%;
+  width: 22%;
+  height: 28px;
+  border-radius: 50% 50% 70% 70%;
+  background: linear-gradient(
+    to bottom,
+    rgba(200, 245, 255, 0.95),
+    rgba(65, 180, 255, 0.85) 40%,
+    rgba(95, 80, 255, 0.4) 75%,
+    transparent
+  );
+  filter: blur(4px);
+  opacity: 0;
+  transform-origin: top center;
+  pointer-events: none;
+}
+
+.astronaut-companion.jetpack-active::after {
+  animation: astronautJetpack 0.28s ease-in-out infinite alternate;
+}
+
+@keyframes astronautJetpack {
+  from {
+    opacity: 0.55;
+    transform: scaleY(0.65);
+  }
+  to {
+    opacity: 0.95;
+    transform: scaleY(1.3);
+  }
+}
+
+.astronaut-companion.reacting svg {
+  animation: astronautWobble 0.45s ease-in-out 2;
+}
+
+@keyframes astronautWobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .astronaut-companion::after,
+  .astronaut-companion.reacting svg {
+    animation: none;
+  }
+}
+
+
+/* ========================================
+   ASTRONAUT ADVENTURES
+======================================== */
+.astronaut-companion .astronaut-cargo {
+  position: absolute;
+  top: 56%;
+  right: -19px;
+  z-index: 2;
+  font-size: 25px;
+  transform: rotate(-12deg);
+  pointer-events: none;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+}
+
+.astronaut-companion .astronaut-cargo.help-sign {
+  right: -32px;
+  padding: 4px 6px;
+  border: 2px solid #d6b5ff;
+  border-radius: 5px;
+  background: #24183c;
+  color: white;
+  font: 700 10px "Fredoka", sans-serif;
+  white-space: nowrap;
+}
+
+.astronaut-companion.jetpack-malfunction::after {
+  background: linear-gradient(
+    to bottom,
+    #fff7a8,
+    #ff9855 45%,
+    #ed4b75 75%,
+    transparent
+  );
+  filter: blur(3px);
+}
+
+.astronaut-companion.jetpack-malfunction svg {
+  filter: drop-shadow(0 0 12px rgba(255, 122, 74, 0.75));
+}
+
+@media (max-width: 600px) {
+  .astronaut-companion .astronaut-cargo {
+    font-size: 18px;
+    right: -15px;
+  }
+
+  .astronaut-companion .astronaut-cargo.help-sign {
+    font-size: 8px;
+    right: -25px;
+  }
+}
+
+
+/* ========================================
+   DISTANT SUN
+======================================== */
+.distant-sun {
+  position: fixed;
+  top: -210px;
+  right: -180px;
+  width: 560px;
+  height: 560px;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  background:
+    radial-gradient(circle at 38% 35%, #fffdea 0%, #ffe9a1 18%, #ffb94e 45%, #df6a39 69%, #753c65 100%);
+  box-shadow:
+    0 0 50px 20px rgba(255, 176, 91, 0.2),
+    0 0 120px 65px rgba(255, 113, 63, 0.12),
+    0 0 240px 130px rgba(177, 89, 120, 0.08);
+  animation: sunBreathe 12s ease-in-out infinite alternate;
+}
+
+.distant-sun::before {
+  content: "";
+  position: absolute;
+  inset: -55px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 174, 86, 0.15) 40%, transparent 70%);
+  filter: blur(35px);
+}
+
+.distant-sun::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 72% 75%, rgba(68, 20, 66, 0.55), transparent 60%);
+}
+
+@keyframes sunBreathe {
+  from { filter: brightness(0.9); }
+  to { filter: brightness(1.15); }
+}
+
+/* ========================================
+   INTERACTIVE EXTRA PLANETS
+======================================== */
+.saturn-world .world-core,
+.volcanic-world .world-core {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Saturn ring disturbance */
+.saturn-world.ring-pulse .saturn-ring {
+  animation: saturnRingPulse 1.2s ease-out;
+}
+
+@keyframes saturnRingPulse {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.9) drop-shadow(0 0 18px rgba(255, 224, 172, 0.8));
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+/* Volcanic eruption */
+.volcanic-world.erupting .volcanic-core {
+  animation: volcanicFlash 1s ease-out;
+}
+
+@keyframes volcanicFlash {
+  0%, 100% { filter: brightness(1); }
+  25% { filter: brightness(2.8); }
+  60% { filter: brightness(1.5); }
+}
+
+.volcanic-debris {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  z-index: 8;
+  background: #ffb35c;
+  box-shadow: 0 0 10px #ff723c;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .distant-sun {
+    width: 350px;
+    height: 350px;
+    top: -160px;
+    right: -180px;
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .distant-sun,
+  .saturn-world.ring-pulse .saturn-ring,
+  .volcanic-world.erupting .volcanic-core {
+    animation: none;
+  }
+}
+
+/* Keep the blue planet solid in front of the sun */
+.planet-system {
+  opacity: 1;
+}
+
+/* Solid sun with a soft outer glow */
+.distant-sun {
+  opacity: 1;
+  background:
+    radial-gradient(
+      circle at 38% 35%,
+      #fffdea 0%,
+      #ffe9a1 18%,
+      #ffb94e 45%,
+      #df6a39 69%,
+      #753c65 100%
+    );
+}
+
+
+/* ========================================
+   ALIEN UFO VISITOR
+======================================== */
+.alien-ufo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 130px;
+  height: 85px;
+  z-index: 16;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  filter: drop-shadow(0 0 14px rgba(80, 255, 205, 0.35));
+}
+
+.alien-ufo.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.alien-ufo svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.alien-ufo .ufo-beam {
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  width: 185px;
+  height: 280px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(92, 255, 194, 0.48),
+    rgba(73, 235, 181, 0.12) 70%,
+    transparent
+  );
+  clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
+  filter: blur(7px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.alien-ufo.communicating .ufo-beam {
+  opacity: 1;
+}
+
+.alien-ufo .ufo-message {
+  position: absolute;
+  bottom: 112%;
+  left: 50%;
+  width: 230px;
+  padding: 12px 16px;
+  border: 1px solid rgba(110, 255, 210, 0.5);
+  border-radius: 15px;
+  background: rgba(6, 25, 29, 0.96);
+  color: #b8ffe4;
+  font: 500 13px "Fredoka", sans-serif;
+  line-height: 1.4;
+  text-align: center;
+  transform: translateX(-50%);
+  box-shadow: 0 0 25px rgba(58, 240, 177, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.alien-ufo.communicating .ufo-message {
+  opacity: 1;
+}
+
+body.second-screen .alien-ufo {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .alien-ufo {
+    width: 95px;
+    height: 65px;
+  }
+
+  .alien-ufo .ufo-message {
+    width: 170px;
+    font-size: 11px;
+  }
+
+  .alien-ufo .ufo-beam {
+    width: 130px;
+    height: 200px;
+  }
+}
+
+/* ========================================
+   SECRET CONSTELLATION
+======================================== */
+.secret-constellation {
+  position: fixed;
+  right: 4%;
+  bottom: 8%;
+  width: 220px;
+  height: 210px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.constellation-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.constellation-lines line {
+  stroke: #b9b0ff;
+  stroke-width: 1.7;
+  filter: drop-shadow(0 0 5px #8d7dff);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.constellation-lines line.revealed {
+  opacity: 0.9;
+}
+
+.constellation-star {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: #dce4ff;
+  box-shadow: 0 0 7px rgba(200, 210, 255, 0.8);
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.constellation-star:hover,
+.constellation-star:focus-visible,
+.constellation-star.discovered {
+  transform: translate(-50%, -50%) scale(1.8);
+  box-shadow: 0 0 15px #a99aff, 0 0 28px #8472ff;
+  outline: none;
+}
+
+.constellation-complete {
+  position: absolute;
+  bottom: -45px;
+  left: 50%;
+  width: max-content;
+  max-width: 250px;
+  transform: translateX(-50%);
+  color: #ded5ff;
+  font: 500 14px "Fredoka", sans-serif;
+  text-align: center;
+  text-shadow: 0 0 12px #9d8aff;
+  animation: constellationAppear 1s ease-out;
+}
+
+@keyframes constellationAppear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body.second-screen .secret-constellation {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .secret-constellation {
+    width: 140px;
+    height: 140px;
+    right: 4%;
+    bottom: 5%;
+  }
+}
+
+/* Fix constellation stars inheriting button dimensions */
+button.constellation-star {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  background: #dce4ff;
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Aries constellation discovery message */
+.constellation-complete {
+  width: 260px;
+  max-width: 80vw;
+  bottom: -55px;
+  color: #e7d8ff;
+  font-size: 13px;
+  line-height: 1.5;
+}

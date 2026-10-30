@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hi Bob!</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+
+
+<!-- Fictional planet system -->
+<div class="planet-scene" aria-hidden="true">
+  <div class="planet-system" id="planetSystem">
+
+    <!-- Planet atmosphere -->
+    <div class="planet-atmosphere"></div>
+
+    
+<!-- Orbiting moons -->
+<div class="moon moon-one" id="moonOne"></div>
+<div class="moon moon-two" id="moonTwo"></div>
+<div class="moon moon-three" id="moonThree"></div>
+<div class="moon moon-four" id="moonFour"></div>
+<div class="moon moon-five" id="moonFive"></div>
+
+    <!-- Main planet -->
+    <div class="planet">
+      <div class="planet-surface"></div>
+      <div class="planet-shadow"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- =====================================
+     ADDITIONAL PLANETS
+===================================== -->
+
+<div class="extra-space" aria-hidden="true">
+
+  <!-- SATURN-INSPIRED PLANET -->
+  <div class="world saturn-world" id="saturnWorld">
+
+    <div class="saturn-ring ring-back"></div>
+
+    <div class="world-core saturn-core"></div>
+
+    <div class="saturn-ring ring-front"></div>
+
+    <div class="world-moon saturn-moon moon-icy"></div>
+    <div class="world-moon saturn-moon moon-rocky"></div>
+    <div class="world-moon saturn-moon moon-gold"></div>
+
+  </div>
+
+  <!-- VOLCANIC PLANET -->
+  <div class="world volcanic-world" id="volcanicWorld">
+
+    <div class="world-core volcanic-core"></div>
+
+    <div class="world-moon volcanic-moon moon-ash"></div>
+    <div class="world-moon volcanic-moon moon-dark"></div>
+
+  </div>
+
+</div>
+
+<!-- =====================================
+     FLYING SPACESHIP
+===================================== -->
+
+<div class="spaceship" id="spaceship" aria-hidden="true">
+
+  <svg viewBox="0 0 180 90" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Engine glow -->
+    <ellipse
+      class="engine-glow"
+      cx="22"
+      cy="45"
+      rx="20"
+      ry="9"
+      fill="#65caff"
+    />
+
+    <!-- Engine exhaust -->
+    <path
+      class="engine-flame"
+      d="M42 37 L7 45 L42 53 Z"
+      fill="#70cfff"
+    />
+
+    <!-- Lower wing -->
+    <path
+      d="M70 47 L35 76 L106 63 L125 48 Z"
+      fill="#586b94"
+      stroke="#a6bbdc"
+      stroke-width="2"
+    />
+
+    <!-- Upper wing -->
+    <path
+      d="M70 43 L35 14 L106 27 L125 42 Z"
+      fill="#788cb1"
+      stroke="#b2c5e2"
+      stroke-width="2"
+    />
+
+    <!-- Main hull -->
+    <path
+      d="M40 36
+         Q83 26 133 36
+         L166 45
+         L133 54
+         Q83 64 40 54 Z"
+      fill="#d8e4f2"
+      stroke="#7890b3"
+      stroke-width="2"
+    />
+
+    <!-- Cockpit -->
+    <path
+      d="M104 36
+         Q126 33 147 45
+         Q126 57 104 54
+         Q111 45 104 36 Z"
+      fill="#5cc5f0"
+      stroke="#d7f8ff"
+      stroke-width="2"
+    />
+
+    <!-- Hull detail -->
+    <path
+      d="M53 45 L99 45"
+      stroke="#8298b9"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+
+    <!-- Navigation light -->
+    <circle cx="68" cy="38" r="3" fill="#ff7878"/>
+
+  </svg>
+
+</div>
+
+
+<!-- =====================================
+     FLOATING ASTRONAUT
+===================================== -->
+
+<div class="astronaut" id="astronaut" aria-hidden="true">
+
+  <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Backpack -->
+    <rect
+      x="24" y="70"
+      width="72" height="62"
+      rx="16"
+      fill="#8395b5"
+      stroke="#dae6f5"
+      stroke-width="4"
+    />
+
+    <!-- Legs -->
+    <rect
+      x="37" y="115"
+      width="19" height="32"
+      rx="8"
+      fill="#e8eef8"
+      stroke="#8c9ebc"
+      stroke-width="3"
+    />
+
+    <rect
+      x="64" y="115"
+      width="19" height="32"
+      rx="8"
+      fill="#e8eef8"
+      stroke="#8c9ebc"
+      stroke-width="3"
+    />
+
+    <!-- Boots -->
+    <rect
+      x="30" y="137"
+      width="29" height="16"
+      rx="6"
+      fill="#566782"
+    />
+
+    <rect
+      x="61" y="137"
+      width="29" height="16"
+      rx="6"
+      fill="#566782"
+    />
+
+    <!-- Arms -->
+    <rect
+      x="10" y="78"
+      width="24" height="52"
+      rx="12"
+      transform="rotate(24 22 78)"
+      fill="#e8eef8"
+      stroke="#8c9ebc"
+      stroke-width="3"
+    />
+
+    <rect
+      x="86" y="78"
+      width="24" height="52"
+      rx="12"
+      transform="rotate(-24 98 78)"
+      fill="#e8eef8"
+      stroke="#8c9ebc"
+      stroke-width="3"
+    />
+
+    <!-- Suit -->
+    <rect
+      x="31" y="69"
+      width="58" height="65"
+      rx="19"
+      fill="#f1f5fc"
+      stroke="#98a9c4"
+      stroke-width="4"
+    />
+
+    <!-- Suit control panel -->
+    <rect
+      x="44" y="92"
+      width="32" height="21"
+      rx="5"
+      fill="#617895"
+    />
+
+    <circle cx="51" cy="102" r="3" fill="#6bffbd"/>
+    <circle cx="61" cy="102" r="3" fill="#ffcf67"/>
+    <circle cx="71" cy="102" r="3" fill="#ff7777"/>
+
+    <!-- Helmet -->
+    <circle
+      cx="60" cy="49"
+      r="42"
+      fill="#f2f5fc"
+      stroke="#8c9ebc"
+      stroke-width="4"
+    />
+
+    <!-- Visor -->
+    <ellipse
+      cx="60" cy="48"
+      rx="32" ry="30"
+      fill="#172c47"
+      stroke="#6b91ba"
+      stroke-width="3"
+    />
+
+    <!-- Visor reflection -->
+    <ellipse
+      cx="48" cy="33"
+      rx="12" ry="6"
+      transform="rotate(-30 48 33)"
+      fill="#9edfff"
+      opacity="0.65"
+    />
+
+    <!-- Tiny helmet light -->
+    <circle cx="60" cy="9" r="5" fill="#a0dfff"/>
+
+  </svg>
+
+</div>
+
+
+
+  <main class="container">
+
+    <h1>Hi Bob!</h1>
+
+    <section class="message-box">
+      <p class="message">
+        I already have about 10 gift ideas for you but im always wanting
+        to know what else you may want.
+      </p>
+
+      <h2>Can you provide help for that?</h2>
+
+      <div class="button-area" id="buttonArea">
+        <button id="yesBtn" class="yes-btn" type="button">Yes</button>
+        <button id="noBtn" class="no-btn" type="button">No</button>
+      </div>
+    </section>
+
+  </main>
+
+
+<!-- =====================================
+     SECOND SCREEN BACKGROUND
+===================================== -->
+
+<div class="scene-veil" id="sceneVeil"></div>
+
+<!-- =====================================
+     PERSONAL WELCOME SCREEN
+===================================== -->
+
+<section class="welcome-screen" id="welcomeScreen" aria-hidden="true">
+
+  <div class="welcome-card">
+
+    <div class="welcome-symbol">✦</div>
+
+    <p class="welcome-label">
+      A LITTLE SOMETHING FOR YOU
+    </p>
+
+    <h2>
+      Welcome to your little<br>
+      <span>corner of the universe,</span><br>
+      Bob.
+    </h2>
+
+    <div class="welcome-divider"></div>
+
+    <p class="welcome-text">
+      I've already got a few gift ideas for you,
+      but I'd love to know what else you've been wishing for.
+    </p>
+
+    <p class="welcome-text">
+      So I made this little website where you can save
+      things you'd like to receive — whether it's for your
+      birthday, Christmas, a special occasion, or simply
+      something you've had your eye on.
+    </p>
+
+    <p class="welcome-text">
+      No pressure, no special reason needed.
+      If you like something, add it!
+    </p>
+
+    <p class="welcome-signature">
+      All your wishes, in one place. ♡
+    </p>
+
+    <button id="enterDashboard" class="continue-btn" type="button">
+      Let's get started
+      <span>→</span>
+    </button>
+
+  </div>
+
+</section>
+
+<!-- =====================================
+     MISSION CONTROL DASHBOARD
+===================================== -->
+
+<section class="dashboard-screen" id="dashboardScreen" aria-hidden="true">
+
+  <div class="dashboard-content">
+
+    <div class="dashboard-heading">
+
+      <p class="dashboard-label">YOUR PERSONAL SPACE STATION</p>
+
+      <h2>Mission Control <span>✦</span></h2>
+
+      <p>
+        Welcome aboard, Bob. Ready to collect some wishes?
+      </p>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+      <!-- Add gifts -->
+      <button class="dashboard-card" id="addGiftCard" type="button">
+
+        <div class="dashboard-icon">✧</div>
+
+        <div class="dashboard-card-text">
+          <span class="dashboard-category">YOUR NEXT DISCOVERY</span>
+          <h3>Add a Gift</h3>
+          <p>
+            Found something you love? Save it here
+            so you won't forget about it.
+          </p>
+        </div>
+
+        <span class="dashboard-arrow">↗</span>
+
+      </button>
+
+      <!-- View wishlist -->
+      <button class="dashboard-card" id="wishlistCard" type="button">
+
+        <div class="dashboard-icon">♡</div>
+
+        <div class="dashboard-card-text">
+          <span class="dashboard-category">YOUR COLLECTION</span>
+          <h3>My Wishlist</h3>
+          <p>
+            Explore everything you've saved,
+            all in one little place.
+          </p>
+        </div>
+
+        <span class="dashboard-arrow">↗</span>
+
+      </button>
+
+    </div>
+
+    <div class="dashboard-bottom">
+      <span class="status-dot"></span>
+      YOUR LITTLE UNIVERSE IS READY
+    </div>
+
+    <p class="dashboard-feedback" id="dashboardFeedback" aria-live="polite"></p>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     ADD A GIFT SCREEN
+===================================== -->
+
+<section class="gift-screen" id="giftScreen" aria-hidden="true">
+
+  <div class="gift-panel">
+
+    <button
+      class="gift-close"
+      id="closeGiftScreen"
+      type="button"
+      aria-label="Close"
+    >×</button>
+
+    <div class="gift-header">
+      <span class="gift-label">MISSION 01 · GIFT COLLECTION</span>
+
+      <div class="gift-icon">✧</div>
+
+      <h2>Make a wish.</h2>
+
+      <p>
+        Something caught your eye?
+        Save it here so it doesn't get lost in space.
+      </p>
+    </div>
+
+    <form id="giftForm" class="gift-form">
+
+      <label for="giftName">
+        What do you want? <span>*</span>
+      </label>
+
+      <input
+        type="text"
+        id="giftName"
+        placeholder="e.g. LEGO Star Wars Millennium Falcon"
+        maxlength="150"
+        required
+      >
+
+
+      <label for="giftLink">Product link</label>
+
+      <input
+        type="url"
+        id="giftLink"
+        placeholder="https://..."
+      >
+
+      <div class="gift-form-row">
+
+        <div class="gift-field">
+          <label for="giftOccasion">Occasion</label>
+
+          <select id="giftOccasion">
+            <option value="Anytime">Just Because</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Christmas">Christmas</option>
+          </select>
+        </div>
+
+        <div class="gift-field">
+          <label for="giftPrice">Approximate price</label>
+
+          <input
+            type="text"
+            id="giftPrice"
+            placeholder="e.g. €49.99"
+            maxlength="30"
+          >
+        </div>
+
+      </div>
+
+      <label for="giftNotes">Anything else?</label>
+
+      <textarea
+        id="giftNotes"
+        rows="3"
+        placeholder="Preferred color, size, edition, or anything else..."
+        maxlength="1000"
+      ></textarea>
+
+      <button class="gift-submit" type="submit">
+        Add to my wishlist
+        <span>✦</span>
+      </button>
+
+      <p class="gift-feedback" id="giftFeedback" role="status"></p>
+
+    </form>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================
+     MY WISHLIST SCREEN
+===================================== -->
+
+<section class="wishlist-screen" id="wishlistScreen" aria-hidden="true">
+
+  <div class="wishlist-container">
+
+    <div class="wishlist-top">
+      <button class="wishlist-back" id="wishlistBack" type="button">
+        ← Mission Control
+      </button>
+
+      <button class="wishlist-add" id="wishlistAdd" type="button">
+        + Add a Gift
+      </button>
+    </div>
+
+    <div class="wishlist-heading">
+      <p class="wishlist-label">YOUR PERSONAL COLLECTION</p>
+
+      <h2>My Wishlist <span>✦</span></h2>
+
+      <p>
+        A little galaxy of everything you've been wishing for.
+      </p>
+
+      <div class="wishlist-count" id="wishlistCount">
+        0 wishes collected
+      </div>
+    </div>
+
+    <div class="wishlist-filters" id="wishlistFilters">
+      <button class="wish-filter active" data-occasion="All" type="button">
+        All Wishes
+      </button>
+
+      <button class="wish-filter" data-occasion="Birthday" type="button">
+        🎂 Birthday
+      </button>
+
+      <button class="wish-filter" data-occasion="Christmas" type="button">
+        🎄 Christmas
+      </button>
+
+      <button class="wish-filter" data-occasion="Anytime" type="button">
+        ✨ Just Because
+      </button>
+    </div>
+
+    <div class="wishlist-grid" id="wishlistGrid"></div>
+
+    <div class="wishlist-empty" id="wishlistEmpty">
+      <div class="empty-symbol">✧</div>
+      <h3>No wishes in this orbit yet.</h3>
+      <p>Let's add something you've had your eye on!</p>
+
+      <button id="emptyAddGift" type="button">
+        Add my first wish →
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+</body>
+</html>
