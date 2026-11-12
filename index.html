@@ -386,7 +386,7 @@
 
     </div>
 
-    <div class="cloud-panel">
+    <div class="cloud-panel" id="cloudPanel" hidden>
       <p id="cloudStatus" role="status" aria-live="polite">Connecting to your private wishlist…</p>
       <form id="unlockForm">
         <label for="accessKey">Private access key</label>
@@ -395,7 +395,6 @@
       </form>
       <div class="cloud-actions">
         <button id="refreshCloud" type="button">Refresh / retry</button>
-        <button id="lockCloud" type="button" hidden>Lock this device</button>
       </div>
       <p id="legacyNotice" hidden>Older wishes may still be saved in this browser. They are kept untouched. Please add any missing wishes again after unlocking.</p>
     </div>
@@ -445,6 +444,7 @@
       YOUR LITTLE UNIVERSE IS READY
     </div>
 
+    <button id="lockCloud" class="quiet-lock" type="button" hidden>Lock this device</button>
     <p class="dashboard-feedback" id="dashboardFeedback" aria-live="polite"></p>
 
   </div>

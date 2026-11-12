@@ -1299,6 +1299,9 @@ function cloudStatus(message) {
 }
 
 function updateCloudControls() {
+  // Keep normal syncing out of the dashboard, including background refreshes.
+  // Reveal access/recovery controls only when the visitor needs to act.
+  document.getElementById("cloudPanel").hidden = cloudBusy || (unlocked && cloudReady);
   unlockForm.hidden = unlocked;
   lockButton.hidden = !unlocked;
   lockButton.disabled = cloudBusy;
