@@ -10,7 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.8/dist/umd/supabase.js" defer></script>
+  <script src="cloud.js?v=2" defer></script>
+  <script src="script.js?v=2" defer></script>
 </head>
 <body>
 
@@ -384,6 +386,20 @@
 
     </div>
 
+    <div class="cloud-panel">
+      <p id="cloudStatus" role="status" aria-live="polite">Connecting to your private wishlist…</p>
+      <form id="unlockForm">
+        <label for="accessKey">Private access key</label>
+        <input id="accessKey" type="password" autocomplete="off" required placeholder="Paste your key, or open your private link">
+        <button type="submit">Unlock wishlist</button>
+      </form>
+      <div class="cloud-actions">
+        <button id="refreshCloud" type="button">Refresh / retry</button>
+        <button id="lockCloud" type="button" hidden>Lock this device</button>
+      </div>
+      <p id="legacyNotice" hidden>Older wishes may still be saved in this browser. They are kept untouched. Please add any missing wishes again after unlocking.</p>
+    </div>
+
     <div class="dashboard-grid">
 
       <!-- Add gifts -->
@@ -566,6 +582,9 @@
         0 wishes collected
       </div>
     </div>
+
+    <p id="wishlistCloudStatus" role="status" aria-live="polite"></p>
+    <button id="wishlistRefresh" class="wishlist-back" type="button">Refresh / retry cloud</button>
 
     <div class="wishlist-filters" id="wishlistFilters">
       <button class="wish-filter active" data-occasion="All" type="button">

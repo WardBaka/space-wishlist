@@ -1,44 +1,3 @@
-
-/* ========================================
-   SUPABASE CONNECTION
-======================================== */
-
-
-const SUPABASE_URL = "https://gqkubboufojjjmlzcxdu.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_giVSbWaVDO7d8kicRNqEnQ_GrPjr2us";
-
-const SAVE_GIFT_ENDPOINT =
-  `${SUPABASE_URL}/functions/v1/save-gift`;
-
-  
-async function sendGiftToSupabase(gift) {
-  const response = await fetch(SAVE_GIFT_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": SUPABASE_PUBLISHABLE_KEY
-    },
-    body: JSON.stringify({
-      name: gift.name,
-      link: gift.link,
-      occasion: gift.occasion,
-      price: gift.price,
-      notes: gift.notes
-    })
-  });
-
-  const result = await response.json().catch(() => ({}));
-
-  if (!response.ok || result.success !== true) {
-    throw new Error(
-      result.error || "Unable to save gift to Supabase"
-    );
-  }
-
-  return result;
-}
-
-
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const buttonArea = document.getElementById("buttonArea");
@@ -1025,34 +984,20 @@ const STORAGE_KEY = "bobs-wishlist-v1";
    LOAD SAVED GIFTS
 ======================================== */
 
-function loadGifts() {
-  try {
-    const saved = JSON.parse(
-      localStorage.getItem(STORAGE_KEY) || "[]"
-    );
-
-    return Array.isArray(saved) ? saved : [];
-  } catch {
-    return [];
-  }
-}
-
-let savedGifts = loadGifts();
+let savedGifts = [];
+let cloudReady = false;
+let cloudBusy = false;
+let unlocked = false;
+let editingVersion = 0;
 
 /* ========================================
    OPEN / CLOSE GIFT SCREEN
 ======================================== */
 
-addGiftCard.addEventListener("click", () => {
-  giftScreen.classList.add("visible");
-  giftScreen.setAttribute("aria-hidden", "false");
-
-  giftFeedback.textContent = "";
-
-  document.getElementById("giftName").focus();
-});
+addGiftCard.addEventListener("click", openNewGiftForm);
 
 function closeGiftScreen() {
+  if (cloudBusy) return;
   giftScreen.classList.remove("visible");
   giftScreen.setAttribute("aria-hidden", "true");
 }
@@ -1085,6 +1030,8 @@ let editingGiftId = null;
 ======================================== */
 
 function openWishlist() {
+  if (!unlocked) { cloudStatus("Open your private access link first."); return; }
+  refreshCloud();
   dashboardScreen.classList.remove("visible");
   dashboardScreen.setAttribute("aria-hidden", "true");
 
@@ -1113,6 +1060,8 @@ document.getElementById("wishlistBack")
 ======================================== */
 
 function openNewGiftForm() {
+  if (!cloudReady || cloudBusy) { cloudStatus("Unlock and refresh your cloud wishlist first."); return; }
+  editingVersion = 0;
   editingGiftId = null;
 
   giftForm.reset();
@@ -1129,13 +1078,6 @@ document.getElementById("wishlistAdd")
 
 document.getElementById("emptyAddGift")
   .addEventListener("click", openNewGiftForm);
-
-// Reset edit mode when Add Gift is clicked
-// from Mission Control.
-addGiftCard.addEventListener("click", () => {
-  editingGiftId = null;
-  giftForm.reset();
-});
 
 /* ========================================
    SAFE URL HELPER
@@ -1289,7 +1231,7 @@ function renderWishlist() {
 
   wishlistEmpty.classList.toggle(
     "visible",
-    filtered.length === 0
+    cloudReady && filtered.length === 0
   );
 
   filtered.forEach((gift) => {
@@ -1318,11 +1260,13 @@ document.querySelectorAll(".wish-filter").forEach((button) => {
 ======================================== */
 
 function editGift(id) {
+  if (!cloudReady || cloudBusy) return;
   const gift = savedGifts.find((item) => item.id === id);
 
   if (!gift) return;
 
   editingGiftId = id;
+  editingVersion = gift.version;
 
   document.getElementById("giftName").value = gift.name || "";
   document.getElementById("giftLink").value = gift.link || "";
@@ -1343,120 +1287,214 @@ function editGift(id) {
 ======================================== */
 
 
-giftForm.addEventListener("submit", async (event) => {
+const PENDING_KEY = "space-wishlist-pending-v2";
+const cloudStatusElement = document.getElementById("cloudStatus");
+const wishlistStatusElement = document.getElementById("wishlistCloudStatus");
+const unlockForm = document.getElementById("unlockForm");
+const lockButton = document.getElementById("lockCloud");
+
+function cloudStatus(message) {
+  cloudStatusElement.textContent = message;
+  wishlistStatusElement.textContent = message;
+}
+
+function updateCloudControls() {
+  unlockForm.hidden = unlocked;
+  lockButton.hidden = !unlocked;
+  lockButton.disabled = cloudBusy;
+  giftForm.querySelectorAll("input, select, textarea, button").forEach(el => { el.disabled = cloudBusy || !cloudReady; });
+  [addGiftCard, document.getElementById("wishlistAdd"), document.getElementById("emptyAddGift")]
+    .forEach(el => { el.disabled = !cloudReady || cloudBusy; });
+  wishlistGrid.querySelectorAll("button").forEach(el => { el.disabled = !cloudReady || cloudBusy; });
+}
+
+// Persist the exact operation before sending. A lost response can be retried even
+// after a page reload, without generating another insert or overwriting new edits.
+async function finishPending() {
+  const raw = sessionStorage.getItem(PENDING_KEY);
+  if (!raw) return null;
+  const request = JSON.parse(raw);
+  try {
+    const result = await WishlistCloud.mutate(request);
+    sessionStorage.removeItem(PENDING_KEY);
+    return result;
+  } catch (error) {
+    // PostgreSQL errors mean the transaction was rejected, not an uncertain save.
+    if (/^[0-9A-Z]{5}$/.test(error.code || "")) sessionStorage.removeItem(PENDING_KEY);
+    throw error;
+  }
+}
+
+async function refreshCloud() {
+  if (cloudBusy || !unlocked) return;
+  cloudBusy = true;
+  cloudReady = false;
+  cloudStatus("Checking the cloud…");
+  updateCloudControls();
+  try {
+    const recovered = await finishPending();
+    if (recovered && !recovered.deleted) {
+      editingGiftId = null;
+      giftForm.reset();
+      giftFeedback.textContent = "Your previous save is confirmed in the cloud.";
+    }
+    const rows = await WishlistCloud.list();
+    if (!unlocked) return;
+    savedGifts = rows;
+    cloudReady = true;
+    cloudStatus(recovered ? "Your previous change is confirmed in the cloud. Wishlist refreshed." : "Up to date with your private cloud wishlist.");
+    renderWishlist();
+  } catch (error) {
+    cloudStatus(`Could not confirm the latest wishlist. ${error.message} Use Refresh / retry. Any displayed wishes may be out of date.`);
+    wishlistEmpty.classList.remove("visible");
+  } finally {
+    cloudBusy = false;
+    updateCloudControls();
+  }
+}
+
+async function initializeCloud() {
+  cloudBusy = true;
+  updateCloudControls();
+  try {
+    unlocked = await WishlistCloud.initialize();
+    cloudStatus(unlocked ? "Connected. Loading wishes…" : "Open your private access link or paste your access key. No email sign-in needed.");
+    try {
+      const legacy = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      document.getElementById("legacyNotice").hidden = !Array.isArray(legacy) || legacy.length === 0;
+    } catch { /* Legacy data is never changed or used as the live wishlist. */ }
+  } catch (error) {
+    cloudStatus(`Could not unlock the wishlist. ${error.message} Reopen your private link or paste its key to retry.`);
+  } finally {
+    cloudBusy = false;
+    updateCloudControls();
+  }
+  WishlistCloud.onLock(() => {
+    unlocked = false;
+    cloudReady = false;
+    savedGifts = [];
+    editingGiftId = null;
+    giftForm.reset();
+    renderWishlist();
+    cloudStatus("This device is locked. Use your private link to return.");
+    updateCloudControls();
+  });
+  if (unlocked) await refreshCloud();
+}
+
+unlockForm.addEventListener("submit", async event => {
   event.preventDefault();
+  if (cloudBusy) return;
+  cloudBusy = true;
+  updateCloudControls();
+  const button = unlockForm.querySelector("button");
+  button.disabled = true;
+  try {
+    await WishlistCloud.unlock(document.getElementById("accessKey").value.trim());
+    unlocked = true;
+    unlockForm.reset();
+  } catch (error) {
+    cloudStatus(`Could not unlock. ${error.message}`);
+  } finally {
+    cloudBusy = false;
+    button.disabled = false;
+    updateCloudControls();
+  }
+  if (unlocked) await refreshCloud();
+});
 
-  const submitButton = giftForm.querySelector(
-    'button[type="submit"]'
-  );
+lockButton.addEventListener("click", async () => {
+  if (cloudBusy) return;
+  cloudBusy = true;
+  updateCloudControls();
+  try {
+    await WishlistCloud.lock();
+    unlocked = false;
+    cloudReady = false;
+    savedGifts = [];
+    editingGiftId = null;
+    giftForm.reset();
+    renderWishlist();
+    cloudStatus("This device is locked. Use your private link to return.");
+  } catch (error) { cloudStatus(`Could not lock this device. ${error.message}`); }
+  finally { cloudBusy = false; updateCloudControls(); }
+});
 
-  if (submitButton.disabled) return;
+document.getElementById("refreshCloud").addEventListener("click", refreshCloud);
+document.getElementById("wishlistRefresh").addEventListener("click", refreshCloud);
+window.addEventListener("online", refreshCloud);
+window.addEventListener("focus", () => { if (!giftScreen.classList.contains("visible")) refreshCloud(); });
+setInterval(() => {
+  if (!document.hidden && !giftScreen.classList.contains("visible")) refreshCloud();
+}, 30000);
 
+async function commitChange(request) {
+  if (sessionStorage.getItem(PENDING_KEY)) {
+    throw new Error("A previous change needs confirmation. Use Refresh / retry before making another change.");
+  }
+  sessionStorage.setItem(PENDING_KEY, JSON.stringify(request));
+  return finishPending();
+}
+
+giftForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (cloudBusy || !cloudReady) {
+    giftFeedback.textContent = "Refresh your cloud wishlist before saving. Your form is still here.";
+    return;
+  }
   const name = document.getElementById("giftName").value.trim();
   const link = document.getElementById("giftLink").value.trim();
-  const occasion = document.getElementById("giftOccasion").value;
-  const price = document.getElementById("giftPrice").value.trim();
-  const notes = document.getElementById("giftNotes").value.trim();
-
-  if (!name) {
-    giftFeedback.textContent = "Please enter a gift name.";
+  if (!name || (link && !validWebUrl(link))) {
+    giftFeedback.textContent = "Enter a gift name and a valid http or https product link.";
     return;
   }
-
-  if (link && !validWebUrl(link)) {
-    giftFeedback.textContent = "Please enter a valid product link.";
-    return;
-  }
-
-  const existing = savedGifts.find(
-    item => item.id === editingGiftId
-  );
-
-  const gift = {
-    id: existing?.id || crypto.randomUUID(),
-    name,
-    link,
-    occasion,
-    price,
-    notes,
-    createdAt: existing?.createdAt || new Date().toISOString()
+  const request = {
+    action: "save", operation_id: crypto.randomUUID(),
+    id: editingGiftId || crypto.randomUUID(), version: editingGiftId ? editingVersion : 0,
+    name, link, occasion: document.getElementById("giftOccasion").value,
+    price: document.getElementById("giftPrice").value.trim(),
+    notes: document.getElementById("giftNotes").value.trim()
   };
-
-  submitButton.disabled = true;
-  giftFeedback.textContent = "Saving your wish...";
-
+  cloudBusy = true;
+  updateCloudControls();
+  giftFeedback.textContent = "Saving to your private cloud…";
   try {
-    if (!editingGiftId) {
-      // New gifts are submitted to the shared database.
-      await sendGiftToSupabase(gift);
-    }
-
-    const updated = editingGiftId
-      ? savedGifts.map(item =>
-          item.id === editingGiftId ? gift : item
-        )
-      : [...savedGifts, gift];
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(updated)
-    );
-
-    savedGifts = updated;
-    editingGiftId = null;
-
+    const confirmed = await commitChange(request);
+    if (!unlocked) return;
+    savedGifts = savedGifts.filter(g => g.id !== confirmed.id).concat(confirmed);
     renderWishlist();
+    editingGiftId = null;
     giftForm.reset();
-
-    giftFeedback.textContent = existing
-      ? "Updated locally. Cloud sync is coming next."
-      : "Wish saved successfully! ✨";
-
-    setTimeout(() => {
-      closeGiftScreen();
-    }, 1200);
-
+    giftFeedback.textContent = "Saved and confirmed in the cloud. ✨";
+    cloudStatus("Your wish was saved and confirmed in the cloud.");
   } catch (error) {
-    console.error("Gift save error:", error);
-
-    giftFeedback.textContent =
-      "Couldn't complete the save. Please try again.";
-
+    cloudReady = false;
+    giftFeedback.textContent = `Save not confirmed. ${error.message} Your form has been kept. Close it and use Refresh / retry.`;
+    cloudStatus(giftFeedback.textContent);
   } finally {
-    submitButton.disabled = false;
+    cloudBusy = false;
+    updateCloudControls();
   }
 });
 
-
-/* ========================================
-   DELETE A GIFT
-======================================== */
-
-function deleteGift(id) {
-  const gift = savedGifts.find((item) => item.id === id);
-
-  if (!gift) return;
-
-  const confirmed = window.confirm(
-    `Remove "${gift.name}" from your wishlist?`
-  );
-
-  if (!confirmed) return;
-
-  const updated = savedGifts.filter(
-    (item) => item.id !== id
-  );
-
+async function deleteGift(id) {
+  if (cloudBusy || !cloudReady) return;
+  const gift = savedGifts.find(g => g.id === id);
+  if (!gift || !window.confirm(`Remove "${gift.name}" from your wishlist on all devices?`)) return;
+  cloudBusy = true;
+  updateCloudControls();
+  cloudStatus("Removing your wish from the cloud…");
   try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(updated)
-    );
-
-    savedGifts = updated;
+    await commitChange({ action: "delete", id, version: gift.version, operation_id: crypto.randomUUID() });
+    savedGifts = savedGifts.filter(g => g.id !== id);
     renderWishlist();
-  } catch {
-    alert("Couldn't remove the gift. Please try again.");
+    cloudStatus("Removal confirmed in the cloud.");
+  } catch (error) {
+    cloudReady = false;
+    cloudStatus(`Removal not confirmed. ${error.message} Use Refresh / retry. The wish is kept visible until confirmed.`);
+  } finally {
+    cloudBusy = false;
+    updateCloudControls();
   }
 }
 
@@ -2010,3 +2048,4 @@ constellationPoints.forEach(([x, y], index) => {
 });
 
 document.body.appendChild(constellation);
+initializeCloud();

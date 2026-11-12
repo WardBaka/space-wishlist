@@ -3034,3 +3034,13 @@ button.constellation-star {
   font-size: 13px;
   line-height: 1.5;
 }
+/* Private cloud controls; the existing scene and gift cards are unchanged. */
+.cloud-panel { margin: 20px auto; padding: 18px; max-width: 640px; border: 1px solid #8d84b866; border-radius: 16px; background: #18152cdd; color: #eee9ff; }
+.cloud-panel form { display: grid; gap: 10px; }
+.cloud-panel input { box-sizing: border-box; width: 100%; padding: 12px; color: #fff; background: #28223d; border: 1px solid #b5a4de; border-radius: 8px; }
+.cloud-panel button { position: static; width: auto; height: auto; padding: 10px 16px; border-radius: 8px; font: inherit; cursor: pointer; }
+.cloud-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.cloud-panel [hidden] { display: none !important; }
+.cloud-panel p, #wishlistCloudStatus { line-height: 1.5; overflow-wrap: anywhere; }
+#wishlistCloudStatus { color: #eee9ff; }
+button:disabled { opacity: .55; cursor: wait; }
