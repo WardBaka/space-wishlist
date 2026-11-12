@@ -1291,7 +1291,6 @@ const PENDING_KEY = "space-wishlist-pending-v2";
 const cloudStatusElement = document.getElementById("cloudStatus");
 const wishlistStatusElement = document.getElementById("wishlistCloudStatus");
 const unlockForm = document.getElementById("unlockForm");
-const lockButton = document.getElementById("lockCloud");
 
 function cloudStatus(message) {
   cloudStatusElement.textContent = message;
@@ -1303,8 +1302,6 @@ function updateCloudControls() {
   // Reveal access/recovery controls only when the visitor needs to act.
   document.getElementById("cloudPanel").hidden = cloudBusy || (unlocked && cloudReady);
   unlockForm.hidden = unlocked;
-  lockButton.hidden = !unlocked;
-  lockButton.disabled = cloudBusy;
   giftForm.querySelectorAll("input, select, textarea, button").forEach(el => { el.disabled = cloudBusy || !cloudReady; });
   [addGiftCard, document.getElementById("wishlistAdd"), document.getElementById("emptyAddGift")]
     .forEach(el => { el.disabled = !cloudReady || cloudBusy; });
@@ -1404,23 +1401,6 @@ unlockForm.addEventListener("submit", async event => {
     updateCloudControls();
   }
   if (unlocked) await refreshCloud();
-});
-
-lockButton.addEventListener("click", async () => {
-  if (cloudBusy) return;
-  cloudBusy = true;
-  updateCloudControls();
-  try {
-    await WishlistCloud.lock();
-    unlocked = false;
-    cloudReady = false;
-    savedGifts = [];
-    editingGiftId = null;
-    giftForm.reset();
-    renderWishlist();
-    cloudStatus("This device is locked. Use your private link to return.");
-  } catch (error) { cloudStatus(`Could not lock this device. ${error.message}`); }
-  finally { cloudBusy = false; updateCloudControls(); }
 });
 
 document.getElementById("refreshCloud").addEventListener("click", refreshCloud);

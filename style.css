@@ -3040,10 +3040,8 @@ button.constellation-star {
 .cloud-panel input { box-sizing: border-box; width: 100%; padding: 12px; color: #fff; background: #28223d; border: 1px solid #b5a4de; border-radius: 8px; }
 .cloud-panel button { position: static; width: auto; height: auto; padding: 10px 16px; border-radius: 8px; font: inherit; cursor: pointer; }
 .cloud-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-.cloud-panel[hidden], .cloud-panel [hidden], .quiet-lock[hidden] { display: none !important; }
+.cloud-panel[hidden], .cloud-panel [hidden] { display: none !important; }
 .cloud-panel button { background: #302849; color: #eee9ff; border: 1px solid #76659e; }
-.quiet-lock { position: static; display: block; width: auto; height: auto; margin: 18px auto 0; padding: 6px 10px; border: 0; background: transparent; color: #a5a0bd; font: 400 12px "Fredoka", sans-serif; cursor: pointer; }
-.quiet-lock:hover, .quiet-lock:focus-visible { color: #fff; text-decoration: underline; }
 .cloud-panel p, #wishlistCloudStatus { line-height: 1.5; overflow-wrap: anywhere; }
 #wishlistCloudStatus { color: #eee9ff; }
 button:disabled { opacity: .55; cursor: wait; }
